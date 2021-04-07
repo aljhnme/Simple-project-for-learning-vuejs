@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+     
+     <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+     <form id="add" v-cloak>
+
+    <h1>Simply</h1>
+
+    <ul>
+      
+        <li v-for="val in infrm" v-on:click="toggle(val)" v-bind:class="{'active':val.active}">
+            
+           {{ val.name }} <span>{{ val.price |  currency}}</span>
+
+        </li>
+    </ul>
+
+    <div class="total">
+       Total: <span>{{total() | currency}}</span>
+    </div>
+
+    </form>
+</body>
+<script type="text/javascript">
+
+    Vue.filter('currency',function(value){
+      
+       return '$'+ value.toFixed(2);
+
+    });
+
+	new Vue({
+         
+         el:"#add",
+         data:{
+
+         	infrm:[
+               {
+               	name:"programmer",
+               	price:339,
+               	active:false
+               },{
+               	name:"teacher",
+               	price:210,
+               	active:false
+               },{
+               	name:"Carpenter",
+               	price:140,
+               	active:false
+               },{
+               	name:"Other",
+               	price:500,
+               	active:false
+               }
+
+         	]
+         },
+
+         methods:{
+           
+           toggle:function(s){
+
+           	 s.active = !s.active;
+           },
+
+           total:function(){
+
+           	  var total=0;
+
+           	  this.infrm.forEach(function(s){
+
+                  if (s.active) {
+                     
+                     total+=s.price;
+                  }
+  
+           	  });
+
+           	  return total;
+           }
+
+         }
+
+	});
+</script>
+</html>
